@@ -1,0 +1,19 @@
+
+.board{
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1rem;
+    background-color: gray;
+    width: 70%;
+}
+
+.tile{
+    background-color: white;
+    font-size: 10rem;
+    place-items: center;
+    text-align: center;
+    font-family: 'Arial'
+}
