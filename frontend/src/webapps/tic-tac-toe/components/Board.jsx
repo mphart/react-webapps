@@ -1,31 +1,44 @@
+import {useEffect, useState} from 'react'
 import '../styles/board.css'
+import bestMove, {evaluate, numX, numO, isTerminalState} from './board.js'
 
 
-export default function Board({boardState, setBoardState, isHumanOpponent = false, turn, setTurn}){
+export default function Board({boardState, setBoardState, turn, setTurn, gameOver, setGameOver}){
     let tileKey = 0
 
-
-
-    function move(e){
-        // playing against AI, only move if it's the human's turn
-        if(!isHumanOpponent && turn){
-            setBoardState([...boardState.slice(0,e.target.id), 'X', ...boardState.slice(e.target.id+1)])
-            setTurn(false)
+    useEffect(() => {
+        if(!turn && !isTerminalState(boardState)){
+            // calculate the best move from the given position
+            // include a timeout to give the illusion of thought
+            let newBoard = bestMove(boardState)
+            setTimeout(()=>{setBoardState(newBoard)},500)
+            setTurn(true)
         }
-        // playing against a human, place the correct symbol accordingly
-        if(isHumanOpponent){
-            setBoardState([...boardState.slice(0,e.target.id), turn ? 'X' : 'O', ...boardState.slice(e.target.id+1)])
-            setTurn(!turn)
+        if(isTerminalState(boardState)){
+            setGameOver(true)
+        }
+    }, [turn])
+
+    function move({target}){
+        let square = target.id
+        // only move if it's the human's turn and the square is not taken
+        if(boardState[square] === '-'){
+            // update the board with the player's move
+            let newBoard = boardState
+            newBoard[square] = numX(boardState) === numO(boardState) ? 'X' : 'O'
+            setTurn(false)
+            setBoardState(newBoard)
         }
     }
 
     return(
+        <>
+        {gameOver && <h1>Game Over</h1>}
         <div className="board">
             {boardState.map(tile => {
                 if(tile === '-'){
                     return (
                         <button className="tile" key={++tileKey} id={tileKey} onClick={move}>
-                            {" "}
                         </button>
                     )
                 } else if(tile === 'X') {
@@ -43,5 +56,6 @@ export default function Board({boardState, setBoardState, isHumanOpponent = fals
                 }
             })}
         </div>
+        </>
     )
 }

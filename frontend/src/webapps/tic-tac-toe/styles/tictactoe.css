@@ -1,5 +1,18 @@
-#root{
-    min-width: 500px;
-    min-height: 500px;
+body{
+    padding: 0px;
+}
 
+/* #root{
+    min-width: 300px;
+    min-height: 500px;
+} */
+
+.tictactoe{
+    display: inline-block;
+    place-items: center;
+}
+
+.gamepanel{
+    display: inline-block;
+    margin-top: .5rem;
 }
