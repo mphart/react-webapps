@@ -1,7 +1,10 @@
 
-export default function GamePanel({boardState, setBoardState, children}){
+export default function GamePanel({boardState, setBoardState, setTurn, children}){
 
-    const newGame = () => setBoardState(['-','-','-','-','-','-','-','-','-'])
+    const newGame = () => {
+        setBoardState(['-','-','-','-','-','-','-','-','-'])
+        setTurn(true)
+    }
 
 
     return(
