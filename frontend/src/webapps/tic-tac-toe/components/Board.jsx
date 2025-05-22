@@ -14,10 +14,11 @@ export default function Board({boardState, setBoardState, turn, setTurn, gameOve
             setTimeout(()=>{setBoardState(newBoard)},500)
             setTurn(true)
         }
+        console.log(isTerminalState(boardState))
         if(isTerminalState(boardState)){
             setGameOver(true)
         }
-    }, [turn])
+    }, [turn, boardState])
 
     function move({target}){
         let square = target.id

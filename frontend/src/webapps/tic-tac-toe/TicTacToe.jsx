@@ -12,6 +12,7 @@ export default function TicTacToe(){
     function newGame(){
         setBoardState(['-','-','-','-','-','-','-','-','-'])
         setTurn('X')
+        setGameOver(false)
     }
 
     return(

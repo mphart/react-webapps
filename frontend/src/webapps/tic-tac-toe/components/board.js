@@ -16,8 +16,12 @@ export default function bestMove(board){
         if(tile === '-'){
             let nextBoard = [...board.slice(0,index), nextSymbol, ...board.slice(index+1,board.length), ]
             let nextBoardEval = minimax(nextBoard, !isMax, depth-1)
-            if(nextBoardEval >= 1 && isMax) bestMoveIndex = index
-            if(nextBoardEval <= -1 && !isMax) bestMoveIndex = index
+            if(nextBoardEval >= 1 && isMax) {
+                bestMoveIndex = index
+            }
+            if(nextBoardEval <= -1 && !isMax) {
+                bestMoveIndex = index
+            }
         }
         index += 1;
     })
@@ -59,7 +63,7 @@ function minimax(board, isMax, depth){
         for(let i = 0; i < remainingSpaces; i++){
             let childIndex = board.indexOf('-',lastChildIndex+1)
             let childBoard = [...board.slice(0,childIndex), isMax ? 'X' : 'O', ...board.slice(childIndex+1,board.length), ]
-            let childEval = minimax(childBoard, false, depth-1)
+            let childEval = minimax(childBoard, true, depth-1)
             minEval = min(childEval, minEval)
             lastChildIndex = childIndex
         }
@@ -78,7 +82,7 @@ export function evaluate(board){
             return board[3*i] === 'X' ? 1 : -1
         }
         // full columns
-        if(board[i] === board[i+3] && board[i+3] === board[i+6] && board[3*i] != '-'){
+        if(board[i] === board[i+3] && board[i+3] === board[i+6] && board[i] != '-'){
             return board[i] === 'X' ? 1 : -1
         }
     }
