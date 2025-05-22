@@ -97,6 +97,7 @@ export function evaluate(board){
     else return 0
 }
 
+// returns true if the board is in a terminal state, false otherwise
 export function isTerminalState(board){
     return evaluate(board) !== 0 || board.indexOf('-') === -1
 }
