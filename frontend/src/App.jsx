@@ -6,6 +6,7 @@ import './styles/App.css'
 // webapps
 import Calculator from './webapps/calculator/Calculator.jsx' 
 import TicTacToe from './webapps/tic-tac-toe/TicTacToe.jsx'
+import WeatherApp from './webapps/weather-app/WeatherApp.jsx'
 
 export default function App() {
   return (
@@ -13,8 +14,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SearchPage />} />
-        <Route path="calculator" element={<Calculator />} />
-        <Route path="tic-tac-toe" element={<TicTacToe />} />
+        <Route path="/calculator" element={<Calculator />} />
+        <Route path="/tic-tac-toe" element={<TicTacToe />} />
+        <Route path="/weather" element={<WeatherApp />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
