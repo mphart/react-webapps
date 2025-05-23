@@ -1,44 +1,59 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import applist from './webapps/applist.json'
 import './styles/App.css'
 
+// webapps
 import Calculator from './webapps/calculator/Calculator.jsx' 
 import TicTacToe from './webapps/tic-tac-toe/TicTacToe.jsx'
 
 export default function App() {
-
   return (
+    <>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SearchPage />} />
+        <Route path="calculator" element={<Calculator />} />
+        <Route path="tic-tac-toe" element={<TicTacToe />} />
 
-
-    <TicTacToe />
-
-
-    
-
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
+    </>
   )
 }
 
+export function SearchPage(){
+  const [filtered, setFiltered] = useState(applist)
 
-{/*<>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+  function handleChange(e){
+    let searchTerm = e.target.value.toLowerCase().trim()
+    let newList = applist.filter(app => app.title.toLowerCase().includes(searchTerm))
+    setFiltered(newList)
+  }
+
+  return (
+    <>
+      <h1>Webapps ({filtered.length})</h1>
+      <input type="text" onChange={handleChange} className="search-field"/>
+      <div className="gallery">
+        {filtered.map(app => {
+          return(
+            <div className="card" key={app.title}>
+              <h1 className="card-title">{app.title}</h1>
+              <h2 className="card-text">{app.description}</h2>
+              <Link to={app.path}><button>View</button></Link>
+              <button className="favorite">Like</button>
+            </div>
+          )
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>*/}
+    </>
+  )
+}
+
+export function NotFoundPage(){
+  return(
+    <h1>404: Not Found</h1>
+  )
+}

@@ -1,0 +1,12 @@
+[
+    {
+        "title" : "calculator",
+        "description" : "A basic four-function calculator",
+        "path" : "/calculator"
+    },
+    {
+        "title" : "tic-tac-toe",
+        "description" : "Play tic tac toe against the AI",
+        "path" : "/tic-tac-toe"
+    }
+]
