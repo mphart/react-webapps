@@ -1,4 +1,18 @@
-// function for calculating the best move given a new board
+/**
+ * Tic Tac Toe Board API
+ * 
+ * Board is represented as an array of strings
+ * -  represents an empty square
+ * X  represents an occupied square of value X
+ * O  represents an occupied square of value O
+ * 
+ * @author Mason Hart
+*/
+
+
+
+// takes a board as input, calculates the best possible next move on the given board,
+// then returns the board with that move completed
 export default function bestMove(board){
     // sum up the number of x's and o's and empty tiles
     let x = numX(board)
@@ -30,6 +44,7 @@ export default function bestMove(board){
     return [...board.slice(0,bestMoveIndex), isMax ? 'X' : 'O', ...board.slice(bestMoveIndex+1,board.length), ]
 }
 
+// helper function to find the value of any given move
 // returns the index of the best position to move
 // X is the maximizing player and O is the minimizing player
 function minimax(board, isMax, depth){
@@ -102,10 +117,12 @@ export function isTerminalState(board){
     return evaluate(board) !== 0 || board.indexOf('-') === -1
 }
 
+// calculates the number of X's on a given board
 export function numX(board){
     return board.filter(tile => tile === 'X').length
 }
 
+// calculates the number of O's on a given board
 export function numO(board){
     return board.filter(tile => tile === 'O').length
 }

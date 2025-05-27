@@ -21,7 +21,7 @@ export default function SearchPage(){
             <div className="card" key={app.title}>
               <h1 className="card-title">{app.title}</h1>
               <h2 className="card-text">{app.description}</h2>
-              <Link to={app.path}><button>View</button></Link>
+              <Link to={"/webapps"+app.path}><button>View</button></Link>
               <button className="favorite">Like</button>
             </div>
           )
