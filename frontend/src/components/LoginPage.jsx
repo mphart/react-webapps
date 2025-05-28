@@ -1,16 +1,30 @@
 import {useState} from 'react'
+import {Link} from 'react-router-dom'
 import '../styles/login.css'
 
 
 export default function LoginPage(){
+    const apiUrl = "http://127.0.0.1:8080/api/login"   // <=== input server address
+
     const [loginInfo, setLoginInfo] = useState({
         email : "",
         password : ""
     })
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         if(validateForm()){
-            alert("Success")
+            console.log("fetching user data")
+            try{
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {"Content-Type" : "application/json"},
+                    body: JSON.stringify(loginInfo),
+                }) 
+                const userData = await response.json()
+                console.log(userData)
+            } catch (err){
+                console.error(err)
+            }
         } else{
             e.preventDefault()
         }
@@ -47,26 +61,20 @@ export default function LoginPage(){
     function handleChange(e){
         const {name, value} = e.target
         setLoginInfo({...loginInfo, [name]: value})
-        console.log(loginInfo)
     }
-
-    function forgotPassword(){
-
-    }
-
 
     return (
         <div className="login">
             <form onSubmit={handleSubmit}>
                 <label>Email</label>
-                <input type="text" name="email" onChange={handleChange} className="login-input" />
+                <input type="text" name="email" onChange={handleChange} className="login-input" maxLength="255" />
                 <br />
                 <label>Password</label>
-                <input type="text" name="password" onChange={handleChange} className="login-input" />
+                <input type="text" name="password" onChange={handleChange} className="login-input" maxLength="32" />
                 <br />
                 <input type="submit" value="Submit" />
             </form>
-            <button onClick={forgotPassword}>Forgot Password?</button>
+            <Link to="/login/forgot-password">Forgot Password?</Link>
         </div>
     )
 }

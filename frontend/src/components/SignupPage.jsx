@@ -4,7 +4,7 @@ export default function SignupPage(){
 
     return(
         <form>
-            <input>Enter your password :)</input>
+            <h1>Enter your password :)</h1>
         </form>
     )
 }
