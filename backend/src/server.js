@@ -7,11 +7,11 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 8080;
+const PORT = 8000;
 const db = require('./db.js');
 const {createHash} = require('crypto')
 
-app.use(cors);
+app.use(cors());
 app.use(express.json());
 
 
@@ -64,17 +64,14 @@ app.post("/api/login", async (req, res) => {
 
   try {
     // make the query
-    const [rows] = await db.query(
-      "SELECT (id,username,password) FROM users WHERE email = ?",
-      [email]
-    );
+    const [rows] = await db.query("SELECT id,username,password FROM users WHERE email = ?", [email]);
     // check if user exists and validate password
     if (!rows.length || rows[0].password !== hash(password)) {
-      return res.status(401).send({ error: "Invalid credentials" });
+      return res.status(401).send({error: "Invalid credentials"});
     }
     // Return user id and username
-    const userId = hash(rows[0].id)
-    res.send({ userId: userId, name: rows[0].username });
+    const userId = hash(rows[0].id.toString())  // hash the user id so that the number of stored users is unknown
+    res.send({ userId: userId, username: rows[0].username });
   } catch (err) {
     console.error(err);
     res.status(500).send({error: "Internal Server Error"});

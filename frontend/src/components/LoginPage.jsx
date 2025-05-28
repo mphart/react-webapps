@@ -1,32 +1,34 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import '../styles/login.css'
 
 
 export default function LoginPage(){
-    const apiUrl = "http://127.0.0.1:8080/api/login"   // <=== input server address
+    const apiUrl = "http://127.0.0.1:8000/api/login"   // <=== input server address
 
     const [loginInfo, setLoginInfo] = useState({
         email : "",
         password : ""
     })
 
+    // temporary state variable, move this to App.jsx
+    const [username, setUsername] = useState(null)
+
     async function handleSubmit(e){
+        e.preventDefault()
         if(validateForm()){
-            console.log("fetching user data")
             try{
                 const response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: {"Content-Type" : "application/json"},
-                    body: JSON.stringify(loginInfo),
-                }) 
-                const userData = await response.json()
-                console.log(userData)
-            } catch (err){
+                    method : "POST",
+                    headers : {"Content-Type": "application/json",},
+                    body: JSON.stringify(loginInfo)
+                })
+                const data = await response.json()
+                console.log(data)
+                setUsername(data.username)
+            } catch(err) {
                 console.error(err)
             }
-        } else{
-            e.preventDefault()
         }
     }
 
@@ -75,6 +77,7 @@ export default function LoginPage(){
                 <input type="submit" value="Submit" />
             </form>
             <Link to="/login/forgot-password">Forgot Password?</Link>
+            {username && <h1>Welcome, {username}!</h1>}
         </div>
     )
 }
