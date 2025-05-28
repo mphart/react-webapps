@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {Link} from 'react-router-dom'
 import '../styles/login.css'
 
@@ -24,7 +24,6 @@ export default function LoginPage(){
                     body: JSON.stringify(loginInfo)
                 })
                 const data = await response.json()
-                console.log(data)
                 setUsername(data.username)
             } catch(err) {
                 console.error(err)
@@ -43,12 +42,11 @@ export default function LoginPage(){
         }
         // further validation of email
         const emailSplit = email.split("@")
-        if(emailSplit.length > 2){
-            alert("Must input a valid email")
+        if(emailSplit.length !== 2){
+            alert("Invalid email")
             return false
-        }
-        if(emailSplit[1].length <= 0){
-            alert("Must input a valid email")
+        } else if(!emailSplit[0].length || !emailSplit[1].length){
+            alert("Invalid email")
             return false
         }
         // check password
@@ -67,12 +65,13 @@ export default function LoginPage(){
 
     return (
         <div className="login">
+            <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
                 <label>Email</label>
                 <input type="text" name="email" onChange={handleChange} className="login-input" maxLength="255" />
                 <br />
                 <label>Password</label>
-                <input type="text" name="password" onChange={handleChange} className="login-input" maxLength="32" />
+                <input type="password" name="password" onChange={handleChange} className="login-input" maxLength="16" />
                 <br />
                 <input type="submit" value="Submit" />
             </form>

@@ -22,7 +22,7 @@ function hash(input){
 
 // SIGNUP ROUTE
 app.post("/api/signup", async (req, res) => {
-  const { email, password, username, datetime } = req.body;
+  const {email, password, username} = req.body;
   // verify fields
   if(!email || !password || !username){
     return res.status(400).send({error: "Required field was null"});
@@ -30,24 +30,25 @@ app.post("/api/signup", async (req, res) => {
 
   try{
     // check if email is in use
-    const [exists] = await db.query("SELECT (email) FROM users",[email]);
+    let [exists] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
     if(exists.length){
       res.status(409).send({error: "Email is already in use"})
     }
     // check if username is in use
-    [exists] = await db.query("SELECT (username) FROM users",[username]);
+    [exists] = await db.query("SELECT * FROM users WHERE username = ?", [username]);
     if(exists.length){
       res.status(409).send({error: "Username is already in use"})
     }
     // make the query
-    const password = hash(password);
+    const password_hash = hash(password);
     const result = await db.query(
-      "INSERT INTO users (email,password,username,joindate,admin) VALUES (?,?,?,?,?)",
-      [email, password, username, datetime, false]
+      "INSERT INTO users (email,password,username) VALUES (?,?,?)",
+      [email, password_hash, username]
     );
+    console.log(result)
     // Return the new user’s id, username, and admin status
     const userId = hash(result.insertId);
-    res.status(201).send({userId: userId, username: result.username, admin: result.admin});
+    res.status(201).send({id: userId, username: result.username, admin: result.admin});
   }catch(err){
     console.error(err);
     res.status(500).send({error: "Internal Server Error"})

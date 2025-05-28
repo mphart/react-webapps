@@ -1,6 +1,8 @@
 import {useState} from 'react'
-import applist from '../webapps/applist.json'
 import {Link} from 'react-router-dom'
+import applist from '../webapps/applist.json'
+import '../styles/search.css'
+
 
 export default function SearchPage(){
   const [filtered, setFiltered] = useState(applist)

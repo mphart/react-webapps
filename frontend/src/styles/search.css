@@ -1,0 +1,43 @@
+/* SEARCH PAGE */
+.gallery{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.search-field{
+  width: 35%;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.card{
+  padding: 1rem;
+  font-size: 1rem;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 500px){
+  .search-field{width: 50%;}
+  .gallery{grid-template-columns: 1fr}
+}
+
+@media only screen and (min-width: 500px){
+  .search-field{width: 45%;}
+  .gallery{grid-template-columns: 1fr 1fr}
+}
+
+@media only screen and (min-width: 780px){
+  .search-field{width: 40%;}
+  .gallery{grid-template-columns: 1fr 1fr 1fr}
+}
+
+@media only screen and (min-width: 1000px){
+  .search-field{width: 38%;}
+  .gallery{grid-template-columns: 1fr 1fr 1fr 1fr}
+}

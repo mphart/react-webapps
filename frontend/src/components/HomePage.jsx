@@ -6,6 +6,8 @@ export default function HomePage(){
         <h1>Welcome To mphart's React Portfolio!</h1>
         <p>This is where I host the projects I have been working on. Check it out!</p>
         <Link to="/webapps"><button>Go To Search Page</button></Link>
+        <Link to="/login"><button>Log In</button></Link>
+        <Link to="/signup"><button>Sign Up</button></Link>
         </>
     )
 }
